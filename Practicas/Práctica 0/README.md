@@ -7,18 +7,18 @@
 **a)** **`whoami`** : imprime el nombre de usuario asociado al ID de usuario efectivo   
 
 
-**b)** **`uname`** : imprime cierta información del sistema (como el nombre del sistema).
+**b)** **`uname`** : imprime cierta información del sistema (como el nombre del sistema). <br />
 **`uname -a`** (--all) imprime toda la información del so.
 
 
 **c)** **`id`** imprime la información de usuario y grupo para cada USUARIO especificado, o (cunado se omite el USUARIO) para cada proceso actual 
 
 
-**d)** **`ps`** : reporta una instantanea de los procesos actuales (cómo el PID). Muestra info sobre una selección de procesos activos. 
+**d)** **`ps`** : reporta una instantanea de los procesos actuales (cómo el PID). Muestra info sobre una selección de procesos activos. <br />
 Y **`ps -e`** selecciona todos los procesos.
 
 
-**e)** **`top`** : proporciona una vista dinamica en tiempo real del sistema en funcionamiento. Puede mostrar información resumida del sistema, asi como una lista de los procesos o subprocesos actualmente gestionados por el linux kernel. 
+**e)** **`top`** : proporciona una vista dinamica en tiempo real del sistema en funcionamiento. Puede mostrar información resumida del sistema, asi como una lista de los procesos o subprocesos actualmente gestionados por el linux kernel. <br />
 Y **`top -n 10`** especifica el máximo número de iteraciones, o frames, que top debe producir antes de finalizar
 
 
@@ -83,15 +83,17 @@ Simbolos para navegar a paths especiales:
 
 **c)** 
 
-> **`touch archivoNuevo`** sirve para crear archivos nuevos en el directorio actual de trabajo.
+> **`$ touch archivoNuevo`** sirve para crear archivos nuevos en el directorio actual de trabajo.
 
 Creamos un archivo vacío llamado miarchivo.txt en home. Verificamos con ls (efectivamente). <br />
 
 En caso de que el archivo ya existiese de antes, el comando **touch** actualiza el *timestamp* del último acceso o la fecha de la última modificación. Para ver esta info: <br />
 
-**`$ stat miarchivo.txt`**
+```bash
+$ stat miarchivo.txt`
+```
 
-### MAnejo de Archivos y directorios 
+### 4. Manejo de Archivos y directorios 
 
 a) 
 
@@ -102,4 +104,60 @@ Este comando busca en el árbol de directorios a partir del directorio dado. Por
 ```bash
 $ find /etc -name "*.txt"
 ```
+
+**b)**
+
+> **`$ rm`** este comando sirve para borrar archivos. Y con la opción **-i** pide confirmación antes de borrar nada.
+
+Borramos mi archivo.txt: 
+
+```bash
+$ rm -i miarchivo.txt
+``` 
+Confirmamos con ls si se borró (efectivamente lo hizo)
+
+**c)**
+
+> **`rm -r`**: elimina directorios con todo su contenido. 
+
+Creamos un directorio carpeta1, entramos a la carpeta y creamos varios archivos. 
+**`$ touch a.txt b.txt x.txt d.txt`**
+Volvemos al directorio de carpeta1 y la eliminamos.
+
+```bash
+rm -r carpeta1
+```
+
+**iii)** <br /> 
+La diferencia entre **`rm -r`** y **`rmdir`**, es que rmdir elimina solo carpetas vaciás en cambio el otro elimina todo sin importar si esta vacia o no.
+
+**d)** 
+
+> **`$ mv`** se puede usar este comando para mover archivos de un directorio a otro y/o renombrarlo.
+
+Creamos un archivo llamado `usuarios.txt` , **CUIDADO**: si movés un archivo a una carpeta donde hay otro archivo con el mismo nombre lo va a SOBREESCRIBIR. <br /> 
+Podes cambiar el nombre con el mismo comando:
+
+```bash
+$ mv usuarios.txt info-user.txt
+```
+
+ahora movemos el archivo al directorio **`/tmp`**
+
+```bash
+$ mv info-user.txt /tmp
+```
+Con `ls` vemos que ya no esta en el directorio actual, y con **`ls -l /tmp`** vemos con màs detalle que se encuentra en el directorio **tmp**
+
+
+**e)** 
+
+> **`$ cp`** este comando sirve para copiar un archivo de un directorio a nuestro directorio actual.
+
+```bash
+$ cp /tmp/info-user.txt info-user.txt
+```
+
+### Ver y modificar permisos de acceso
+
 
