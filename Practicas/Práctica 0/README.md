@@ -93,6 +93,7 @@ En caso de que el archivo ya existiese de antes, el comando **touch** actualiza 
 $ stat miarchivo.txt`
 ```
 
+
 ### 4. Manejo de Archivos y directorios 
 
 a) 
@@ -129,7 +130,7 @@ rm -r carpeta1
 ```
 
 **iii)** <br /> 
-La diferencia entre **`rm -r`** y **`rmdir`**, es que rmdir elimina solo carpetas vaciás en cambio el otro elimina todo sin importar si esta vacia o no.
+La diferencia entre **`rm -r`** y **`rmdir`**, es que rmdir elimina solo carpetas vacias en cambio el otro elimina todo sin importar si esta vacia o no.
 
 **d)** 
 
@@ -155,9 +156,162 @@ Con `ls` vemos que ya no esta en el directorio actual, y con **`ls -l /tmp`** ve
 > **`$ cp`** este comando sirve para copiar un archivo de un directorio a nuestro directorio actual.
 
 ```bash
-$ cp /tmp/info-user.txt info-user.txt
+cp /tmp/info-user.txt info-user.txt
 ```
 
-### Ver y modificar permisos de acceso
+
+### 5. Ver y modificar permisos de acceso
+
+Nota: Para estos ejercicios se necesita la carpeta taller0, se encuentra en la VM
+de la materia.
+
+> En mi caso el VM no carga correctamente dado que el kvm esta activo en mi kernel, <br /> 
+para corregirlo lo desactivo temporalmente escribiendo lo siguiente
+
+```bash 
+sudo rmmod kvm_intel
+sudo rmmod kvm
+```
+
+Se vuelve a activar al reiniciar el SO.
 
 
+Cada archivo y directorio en Linux tiene permisos para tres categorías: **`’user’`**, **`’group’`**, y **`’all users’`** (o ’other’). <br />
+Estos son los permisos que se setean para cada archivo y directorio:
+
+| **Permiso** | **Simbolo** |
+|---------|---------|
+|read   | r |
+|write  | w |
+|execute| x |
+
+**a)** Para mirar los archivos dentro de la VM escribimos lo siguiente:
+
+```bash
+cd home/tallerso/taller0
+ls -l archivo_misterioroso.txt
+```
+
+Nos devuelve : <br />
+`$ -rw-r--r-- 1 tallerso tallerso 23330 Aug 15 2023 archivo_misterioso.txt`
+
+**ejemplo de salida**
+
+`$ -rw-r--r-- 1 ssoo ssoo 8121 Ago 15 16:45 archivo_misterioso.txt`
+
+| Comando | descripción |
+|--------|:--------------|
+| `-` |indica que se trata de un archivo, si fuese un directorio habría una **d** |
+| `rw-` | corresponden al usuario |
+| `r--` | corresponden al grupo |
+| `r--` | corresponden a other|
+
+**i)**
+
+El usuario tiene permiso de escritura y lectura. El grupo y otros solo tienen permisos de lectura.
+
+
+**b)** 
+
+> El comando **`chmod`** permite cambiar los permisos para un archivo. Una combinación de estos caracteres especifica qué permisos cambiar:
+
+| **Opción** | **Descripción** |
+|-----------|-------------|
+|r,w,x| **Permisos**: read, write, execute|
+| u, g, o| **Categoría de usuario**: user, group, other|
+| +,- |**Operación**: dar o quitar|
+
+______________EJEMPLO______________
+
+Para quitar permisos de lectura para todos los usuarios:
+
+```bash
+chmod -r archivo_misterioso.txt
+```
+
+verificamos con `ls -l` y efectivamente ningún usuario tiene permiso de lectura. Para volver a darle los permisos de lectura:
+
+```bash
+chmod +r archivo_misterioso.txt
+```
+
+Si quisiera quitar los permisos de lectura sólo para ’other’:
+
+```bash
+chmod o-r archivo_misterioso.txt
+```
+
+### 6. Archivos de texto: ver contenido
+
+> El sufijo **`.sh`** es una conción para identidicar que un archivo es un **`bash script`**
+
+**a)** 
+
+> **`$ cat`** muestra el contenido de un archivo
+
+Ejemplo en la carpeta taller0
+```bash
+$ cat esto_es_un_script.sh
+```
+
+Si el archivo es muy largo para verse en la terminal, sólo muestra la última parte
+
+**b)**
+
+> **`$ more`**: una alternativa a cat. Muestra la primera parte del archivo primero. Con la barra espaciadora podés ir pasando de a _página_ hasta el final del archivo. Al llegar al final del archivo se vuelve a la línea de comandos. También se puede volver con **q**.
+
+```bash
+more esto_es_un_script.sh
+```
+
+**c)**
+
+> **`less`** Para poder avanzar y subir en el archivo.
+
+```bash
+less esto_es_un_script.sh
+```
+
+**d)**
+
+> **`head`** por defecto imprime las 10 primeras líneas de un archivo.
+
+```bash
+head esto_es_un_script
+```
+
+También podes especificar el número de líneas imprimir (puede ser mayor a 10)
+
+```bash
+head -3 esto_es_un_script.sh
+```
+
+**e)**
+> **`tail`**: imprime las 10 últimas líneas de un archivo.
+
+También podes especificar el número de líneas a imprimir.
+
+```bash
+tail -2 esto_es_un_script.sh
+```
+
+
+### 7. Archivos de texto: extraer líneas y campos
+
+**a)**
+
+> **`grep`** permite especificar un patrón y buscar las líneas del archivo que coincidan con el patrón.
+
+**i)** Imprime todas las líneas del archivo_misterioso.txt que tenga la palabra escalera.
+```bash
+grep escalera archivo_misterioso.txt
+```
+
+**ii)** comando **`grep`** mas:
+|**Opción**| **Descripción**|
+|----------|----------------|
+|-n | --line-number : q|
+|-c ||
+|-i ||
+|-v ||
+|-w ||
